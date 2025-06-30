@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 
-import Fallback from "@/ui/Fallback";
 import { Spinner } from "@/ui/Spinner";
 import PersonalInfo from "./_/_components/PersonalInfo";
 

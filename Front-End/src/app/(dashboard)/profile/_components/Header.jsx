@@ -10,6 +10,7 @@ import { useState } from "react";
 import Drawer from "@/ui/Drawer";
 import SideBar from "./SideBar";
 import GreetingMessage from "@/ui/GreetingMessage";
+import NotificationBell from "@/ui/NotificationBell";
 
 function Header({}) {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
@@ -46,10 +47,10 @@ function Header({}) {
           </span>
         </div>
 
-        {/* DarkMode + UserAvatar */}
-        <div className="flex items-center gap-x-4">
+        {/* DarkMode + Notification + UserAvatar */}
+        <div className="flex items-center gap-x-3 md:gap-x-6">
           <DarkModeToggle />
-
+          <NotificationBell/>
           <Link href="/profile">
             <Avatar src={user?.avatarUrl} width={28} />
           </Link>

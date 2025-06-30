@@ -74,7 +74,7 @@
 
 @layer components {
   .form {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6 bg-secondary-0 p-4 rounded-xl w-full ;
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6 bg-secondary-0 p-4 rounded-xl w-full;
   }
   .textField__input {
     @apply w-full py-3 px-4 rounded-xl text-secondary-900 border border-secondary-100 bg-secondary-100 hover:border-primary-500 focus:border-primary-500 focus:bg-secondary-0 transition-all duration-300 ease-out focus:shadow-lg focus:shadow-primary-200 dark:focus:shadow-secondary-200;
@@ -174,7 +174,6 @@ body {
 *::-webkit-scrollbar-thumb:hover {
   background-color: rgba(var(--color-secondary-300), 0.8);
 }
-
 
 button {
   cursor: pointer;
@@ -288,6 +287,16 @@ table td {
   }
 }
 
+/* Shadows */
+.shadow-card {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.shadow-card-md{
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+
+}
+
 /* Custom Scrollbar */
 .scrollbar-thin::-webkit-scrollbar {
   width: 6px;
@@ -316,3 +325,166 @@ table td {
 .scrollbar-thin:hover {
   scrollbar-color: rgba(var(--color-secondary-300), 0.8) transparent;
 }
+
+/* Border animations */
+@keyframes bordermove {
+  0% {
+    border-color: transparent;
+    border-top-color: rgb(var(--color-primary-900));
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  25% {
+    border-top-color: rgb(var(--color-primary-900));
+    border-right-color: rgb(var(--color-primary-900));
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+  }
+  50% {
+    border-top-color: transparent;
+    border-right-color: rgb(var(--color-primary-900));
+    border-bottom-color: rgb(var(--color-primary-900));
+    border-left-color: transparent;
+  }
+  75% {
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: rgb(var(--color-primary-900));
+    border-left-color: rgb(var(--color-primary-900));
+  }
+  100% {
+    border-color: rgb(var(--color-primary-900));
+  }
+}
+
+/* Force proper RTL rendering in slick */
+.rtl-slider .slick-track {
+  direction: rtl !important;
+}
+
+/* BLOG STATS SECTION ANIMATIONS */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-up-title {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-up-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-hover {
+  transition: all 0.2s ease-out;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.01);
+}
+
+.icon-rotate {
+  transition: transform 0.6s ease-out;
+}
+
+.icon-rotate:hover {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.stagger-1 {
+  transition-delay: 0.1s;
+}
+.stagger-2 {
+  transition-delay: 0.3s;
+}
+.stagger-3 {
+  transition-delay: 0.5s;
+}
+
+.icon-bounce {
+  animation: iconBounce 0.6s ease-out;
+  animation-fill-mode: both;
+}
+
+.icon-bounce.visible {
+  animation-delay: 0.4s;
+}
+
+.icon-bounce.stagger-1.visible {
+  animation-delay: 0.5s;
+}
+.icon-bounce.stagger-2.visible {
+  animation-delay: 0.6s;
+}
+.icon-bounce.stagger-3.visible {
+  animation-delay: 0.7s;
+}
+
+@keyframes iconBounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.value-slide {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.6s ease-out;
+}
+
+.value-slide.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.value-slide.stagger-1.visible {
+  transition-delay: 0.6s;
+}
+.value-slide.stagger-2.visible {
+  transition-delay: 0.7s;
+}
+.value-slide.stagger-3.visible {
+  transition-delay: 0.8s;
+}
+
+.label-fade {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s ease-out;
+}
+
+.label-fade.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.label-fade.stagger-1.visible {
+  transition-delay: 0.8s;
+}
+.label-fade.stagger-2.visible {
+  transition-delay: 0.9s;
+}
+.label-fade.stagger-3.visible {
+  transition-delay: 1s;
+}
+

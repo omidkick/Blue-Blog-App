@@ -19,9 +19,6 @@ const statusStyle = [
 ];
 
 function CommentRow({ index, comment }) {
-
-
-
   const {
     content: { text },
     user,

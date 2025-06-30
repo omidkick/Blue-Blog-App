@@ -4,40 +4,26 @@
 import { useState } from "react";
 import {
   HiChevronDown,
+  HiChevronUp,
+  HiDocumentText,
   HiUserCircle,
   HiArrowRightOnRectangle,
-  HiDocumentText,
 } from "react-icons/hi2";
 import { useAuth } from "@/context/AuthContext";
 import useOutsideClick from "@/hooks/useOutsideClick";
 import NavLink from "@/components/NavLink";
-import { useRouter } from "next/navigation";
-import { motion } from "framer-motion"; 
 
 function UserDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const router = useRouter();
 
   const ref = useOutsideClick(() => setIsOpen(false));
 
   const logoutHandler = async () => {
     await logout();
-    router.push("/home");
   };
 
   if (!user) return null;
-
-  // Framer Motion variants for smooth animation
-  const dropdownVariants = {
-    open: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
-    closed: { opacity: 0, y: -10, scale: 0.95, transition: { duration: 0.3, ease: "easeIn" } },
-  };
-
-  const chevronVariants = {
-    open: { rotate: 180, transition: { duration: 0.4, ease: "easeOut" } },
-    closed: { rotate: 0, transition: { duration: 0.4, ease: "easeIn" } },
-  };
 
   return (
     <div className="relative" ref={ref}>
@@ -47,26 +33,29 @@ function UserDropdown() {
         className="flex items-center gap-1 p-2 rounded-lg text-secondary-500 hover:text-primary-700 hover:bg-secondary-200 transition md:text-base text-sm"
       >
         <HiUserCircle className="w-7 h-7" />
-        
-        {/* Animated Chevron */}
-        <motion.div
-          initial="closed"
-          animate={isOpen ? "open" : "closed"}
-          variants={chevronVariants}
-        >
-          <HiChevronDown className="w-4 h-4" />
-        </motion.div>
+        <HiChevronDown
+          style={{
+            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+            transition: "transform 0.4s ease-in-out",
+          }}
+          className="w-4 h-4"
+        />
       </button>
 
       {/* User Profile */}
-      <motion.div
-        className="absolute left-0 top-9 mt-2 w-52 bg-secondary-0 border border-secondary-200 rounded-xl shadow-lg p-4"
+      <div
+        className={`
+          absolute left-0 top-9 mt-2 w-52 bg-secondary-0 border border-secondary-200 rounded-xl shadow-lg p-4
+          transition-opacity duration-400
+          ${
+            isOpen
+              ? "opacity-100 visible"
+              : "opacity-0 invisible pointer-events-none"
+          }
+          !z-20
+        `}
         role="menu"
         aria-hidden={!isOpen}
-        initial="closed"
-        animate={isOpen ? "open" : "closed"}
-        variants={dropdownVariants}
-        style={{ zIndex: 20 }}
       >
         {/* User Info */}
         <div className="flex items-center gap-3 border-b border-secondary-200 pb-3 mb-3">
@@ -109,7 +98,7 @@ function UserDropdown() {
             <HiArrowRightOnRectangle className="w-5 h-5" /> خروج
           </button>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -25,7 +25,7 @@ function Header() {
   const { user, isLoading } = useAuth();
   return (
     <header
-      className={`z-10 shadow-md mb-10 sticky top-0 transition-all duration-200 border-b border-b-secondary-300 bg-secondary-100/90 rounded-lg ${
+      className={`z-20 shadow-md mb-10 sticky top-0 transition-all duration-200 border-b border-b-secondary-300 bg-secondary-100/90 rounded-lg ${
         isLoading ? "blur-sm opacity-70" : "opacity-100 blur-0"
       }`}
     >
@@ -33,7 +33,7 @@ function Header() {
         {/* Right Side - Sidebar toggle + Navigation */}
         <div className="flex items-center gap-x-4">
           {/* Desktop Logo */}
-          <NavLink path="/" className="hidden md:block ml-4">
+          <NavLink path="/home" className="hidden md:block ml-4">
             <Logo />
           </NavLink>
 
@@ -41,7 +41,7 @@ function Header() {
           <SidebarToggle />
 
           {/* Mobile Logo */}
-          <NavLink path="/" className="md:hidden">
+          <NavLink path="/home" className="md:hidden">
             <img src="/images/Logo.png" alt="Logo" className="h-7 w-7" />
           </NavLink>
 

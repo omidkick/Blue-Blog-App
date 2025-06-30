@@ -25,7 +25,21 @@ export async function editUserApi(data) {
   return http.patch(`/user/update`, data).then(({ data }) => data.data);
 }
 
-// upload Avatar
-export async function uploadAvatarApi(data) {
-  return http.post(`/user/upload-avatar`, data).then(({ data }) => data.data);
+// // upload Avatar
+// export async function uploadAvatarApi(data) {
+//   return http.post(`/user/upload-avatar`, data).then(({ data }) => data.data);
+// }
+
+// upload Avatar : Properly format as FormData
+export async function uploadAvatarApi(file) {
+  const formData = new FormData();
+  formData.append("avatar", file);
+
+  return http
+    .post(`/user/upload-avatar`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then(({ data }) => data.data);
 }

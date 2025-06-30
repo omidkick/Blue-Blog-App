@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import NextThemeProvider from "@/context/ThemeProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import NotificationProvider from "@/context/NotificationContext";
 
 export const metadata = {
   title: {
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
         <NextThemeProvider>
           <Toaster position="top-center" />
           <ReactQueryProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <NotificationProvider>
+              <AuthProvider>{children}</AuthProvider>
+            </NotificationProvider>
           </ReactQueryProvider>
         </NextThemeProvider>
       </body>

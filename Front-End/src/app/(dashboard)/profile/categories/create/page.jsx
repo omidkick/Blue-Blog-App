@@ -13,16 +13,16 @@ function Page() {
           },
           {
             label: "دسته بندی ها",
-            href: "/profile/posts",
+            href: "/profile/categories",
           },
           {
-            label: "ایجاد پست",
-            href: "/profile/posts/create",
+            label: "ایجاد دسته بندی",
+            href: "/profile/categories/create",
             active: true,
           },
         ]}
       />
-      <CreateCategoryForm/>
+      <CreateCategoryForm />
     </div>
   );
 }

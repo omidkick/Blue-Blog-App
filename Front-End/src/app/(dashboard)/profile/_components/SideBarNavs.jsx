@@ -1,6 +1,8 @@
 "use client";
 
 // imports
+import useComments from "@/hooks/useComments";
+import { toPersianDigits } from "@/utils/numberFormatter";
 import {
   ChatBubbleBottomCenterIcon,
   DocumentTextIcon,
@@ -51,7 +53,7 @@ const sidebarNavs = [
     icon: <UsersIcon className="w-5 h-5" />,
     href: "/profile/users",
   },
-    {
+  {
     id: 7,
     title: "اطلاعات کاربری",
     icon: <UserCircleIcon className="w-5 h-5" />,
@@ -60,6 +62,18 @@ const sidebarNavs = [
 ];
 export default function SideBarNavs({ onClose }) {
   const pathname = usePathname();
+
+  // get all unconfirmed comments from CustomHook
+  const { isLoading, comments } = useComments();
+
+  // console.log(comments);
+  const flatComments = comments.flatMap((comment) => [
+    comment,
+    ...comment.answers,
+  ]);
+  const unconfirmedComments = flatComments.filter(
+    (c) => Number(c.status) === 1
+  );
 
   // find match link
   const activeHref =
@@ -81,15 +95,24 @@ export default function SideBarNavs({ onClose }) {
               onClick={onClose}
               href={href}
               className={classNames(
-                "flex items-center gap-x-2 rounded-xl font-medium hover:text-primary-900 transition-all duration-200 text-secondary-700 py-3 px-4",
+                "flex items-center justify-between rounded-xl font-medium hover:text-primary-900 transition-all duration-200 text-secondary-700 py-3 px-4",
                 {
                   "!font-extrabold !text-primary-900 !bg-secondary-100":
                     isActive,
                 }
               )}
             >
-              {icon}
-              {title}
+              <div className="flex items-center gap-x-2">
+                {icon}
+                {title}
+              </div>
+              {unconfirmedComments.length && href === "/profile/comments" ? (
+                <span className="badge badge--secondary text-sm flex items-center">
+                  {toPersianDigits(unconfirmedComments.length)}
+                </span>
+              ) : (
+                ""
+              )}
             </Link>
           </li>
         );
@@ -97,31 +120,3 @@ export default function SideBarNavs({ onClose }) {
     </ul>
   );
 }
-
-//!old:
-// export default function SideBarNavs() {
-//   const router = useRouter();
-//   return (
-//     <ul className="space-y-2">
-//       {sidebarNavs.map((nav) => {
-//         return (
-//           <li key={nav.id}>
-//             <Link
-//               href={nav.href}
-//               className={classNames(
-//                 "flex items-center gap-x-2 rounded-2xl font-medium hover:text-primary-900 transition-all duration-200 text-secondary-700 py-3 px-4",
-//                 {
-//                   "bg-primary-100/40 !font-bold text-primary-900":
-//                     router.pathname === nav.href,
-//                 }
-//               )}
-//             >
-//               {nav.icon}
-//               {nav.title}
-//             </Link>
-//           </li>
-//         );
-//       })}
-//     </ul>
-//   );
-// }

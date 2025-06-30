@@ -28,6 +28,9 @@
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.16.0",
     "react-loader-spinner": "^6.1.6",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.2.8",
     "yup": "^1.6.1"
   },
   "devDependencies": {

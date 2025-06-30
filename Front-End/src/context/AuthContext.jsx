@@ -1,5 +1,6 @@
 "use client";
 
+// Imports
 import {
   getUserApi,
   logoutApi,
@@ -9,6 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 import { createContext, useReducer, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
+import { useNotifications } from "./NotificationContext";
 
 // Context
 const AuthContext = createContext();
@@ -41,21 +43,29 @@ const authReducer = (state, action) => {
       return {
         user: action.payload,
         isAuthenticated: true,
+        isLoading: false,
+        error: null,
       };
     case "signup":
       return {
         user: action.payload,
         isAuthenticated: true,
+        isLoading: false,
+        error: null,
       };
     case "user/loaded":
       return {
         user: action.payload,
         isAuthenticated: true,
+        isLoading: false,
+        error: null,
       };
     case "logout":
       return {
         user: null,
         isAuthenticated: false,
+        isLoading: false,
+        error: null,
       };
     default:
       throw new Error("Unknown action!");
@@ -70,6 +80,13 @@ export default function AuthProvider({ children }) {
     initialState
   );
 
+  // Get notification functions
+  const {
+    addSigninNotification,
+    addSignupNotification,
+    clearAllNotifications,
+  } = useNotifications();
+
   // !!!!!!  Actions:  !!!!!!
   // signin action
   async function signin(values) {
@@ -77,14 +94,16 @@ export default function AuthProvider({ children }) {
     try {
       const { user, message } = await signinApi(values);
       dispatch({ type: "signin", payload: user });
+      addSigninNotification(user.email || values.email);
       toast.success(message);
-      router.push("/profile");
+      router.replace("/profile");
     } catch (error) {
       const errorMsg = error?.response?.data?.message;
       dispatch({ type: "rejected", payload: errorMsg });
       toast.error(errorMsg);
     }
   }
+
   // signup action
   async function signup(values) {
     dispatch({ type: "loading" });
@@ -92,14 +111,16 @@ export default function AuthProvider({ children }) {
     try {
       const { user, message } = await signupApi(values);
       dispatch({ type: "signup", payload: user });
+      addSignupNotification(user.email || values.email);
       toast.success(message);
-      router.push("/profile");
+      router.replace("/profile");
     } catch (error) {
       const errorMsg = error?.response?.data?.message;
       dispatch({ type: "rejected", payload: errorMsg });
       toast.error(errorMsg);
     }
   }
+
   // get user
   async function getUser() {
     dispatch({ type: "loading" });
@@ -107,19 +128,21 @@ export default function AuthProvider({ children }) {
     try {
       const { user } = await getUserApi();
       dispatch({ type: "user/loaded", payload: user });
-      // console.log("the user is :", user);
     } catch (error) {
       const errorMsg = error?.response?.data?.message;
       dispatch({ type: "rejected", payload: errorMsg });
-      // toast.error(errorMsg);
     }
   }
+
   // logout
   async function logout() {
     try {
       await logoutApi();
+
+      // Clear all notifications on logout
+      clearAllNotifications();
+
       router.push("/");
-      // document.location.href = "/";
       dispatch({ type: "logout" });
     } catch (error) {
       toast.error(error);

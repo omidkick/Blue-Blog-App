@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import RelatedPost from "../_components/RelatedPost";
 import PostComment from "../_components/comment/PostComment";
+import BackButton from "@/ui/BackButton";
 
 // export const dynamicParams = false;
 
@@ -31,8 +32,9 @@ async function SinglePost({ params }) {
   if (!post) notFound();
 
   return (
-    <div className="text-secondary-600 max-w-screen-lg mx-auto">
-      <h1 className="text-secondary-700 text-2xl font-bold mb-8">
+    <div className="text-secondary-600 max-w-screen-lg mx-auto px-4">
+      <h1 className="text-secondary-700 text-2xl font-bold mb-8 flex flex-col md:flex-row  md:items-center gap-2 lg:gap-8">
+        <BackButton arrowClassName="w-6 lg:w-7 lg:h-7 h-6" />
         {post.title}
       </h1>
       <p className="mb-4">{post.briefText}</p>
