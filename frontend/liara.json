@@ -1,0 +1,5 @@
+{
+  "platform": "next",
+  "app": "blue-blog",
+  "port": 3000
+}
