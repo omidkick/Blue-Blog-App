@@ -16,4 +16,8 @@ async function Page() {
     </div>
   );
 }
+
+// Disable static generation
+export const dynamic = 'force-dynamic';
+
 export default Page;

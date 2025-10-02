@@ -2,6 +2,9 @@ import MyPostsTableWrapper from "./_components/MyPostsTableWrapper";
 import { Suspense } from "react";
 import { Spinner } from "@/ui/Spinner";
 
+// Disable static generation
+export const dynamic = 'force-dynamic';
+
 export default function MyBlogsPage({ searchParams }) {
   return (
     <section>

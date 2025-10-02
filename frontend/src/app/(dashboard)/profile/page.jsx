@@ -33,4 +33,8 @@ async function Profile() {
   );
 }
 
+
+// Disable static generation
+export const dynamic = "force-dynamic";
+
 export default Profile;

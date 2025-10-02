@@ -63,4 +63,8 @@ async function BlogPage({ searchParams }) {
   );
 }
 
+
+// Disable static generation
+export const dynamic = "force-dynamic";
+
 export default BlogPage;
