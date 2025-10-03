@@ -76,6 +76,9 @@ function Signup() {
                 <input
                   {...register("name")}
                   type="text"
+                  autoComplete="name"
+                  id="name"
+                  name="name"
                   placeholder="نام و نام خانوادگی"
                   className={`w-full pr-9 pl-4 py-3.5 rounded-xl bg-secondary-50 text-secondary-800 placeholder-secondary-500 border transition-all duration-200 focus:outline-none focus:ring-2 hover:border-primary-300 placeholder:text-sm placeholder:font-medium placeholder:text-secondary-400${
                     errors.name
@@ -117,6 +120,9 @@ function Signup() {
                 <input
                   {...register("email")}
                   type="email"
+                  autoComplete="email"
+                  id="email"
+                  name="email"
                   dir="ltr"
                   className={`w-full pr-28 pl-4 py-3.5 rounded-xl bg-secondary-50 text-secondary-800 placeholder-transparent border transition-all duration-200 focus:outline-none focus:ring-2 hover:border-primary-300 ${
                     errors.email
@@ -157,6 +163,9 @@ function Signup() {
                   {...register("password")}
                   type={showPassword ? "text" : "password"}
                   dir="ltr"
+                  autoComplete="new-password"
+                  id="password"
+                  name="password"
                   className={`w-full pr-28 pl-12 py-3.5 rounded-xl bg-secondary-50 text-secondary-800 placeholder-transparent border transition-all duration-200 focus:outline-none focus:ring-2 hover:border-primary-300 ${
                     errors.password
                       ? "border-red-500 focus:ring-red-200"
@@ -206,6 +215,8 @@ function Signup() {
             <div className="flex items-center gap-2 text-sm whitespace-nowrap overflow-hidden text-ellipsis">
               <input
                 type="checkbox"
+                id="conditions"
+                name="conditions"
                 className="w-4 h-4 text-primary-600 bg-secondary-50 border-secondary-300 rounded focus:ring-primary-500 focus:ring-2"
                 required
               />

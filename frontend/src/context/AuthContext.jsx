@@ -7,7 +7,7 @@ import {
   signinApi,
   signupApi,
 } from "@/services/authService";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { createContext, useReducer, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useNotifications } from "./NotificationContext";
@@ -72,9 +72,31 @@ const authReducer = (state, action) => {
   }
 };
 
+// Helper function to get redirect path from cookies
+const getRedirectPathFromCookie = () => {
+  if (typeof window === "undefined") return "/home";
+
+  const cookieValue = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("redirectPath="))
+    ?.split("=")[1];
+
+  return cookieValue ? decodeURIComponent(cookieValue) : "/home";
+};
+
+// Helper function to clear redirect path cookie
+const clearRedirectPathCookie = () => {
+  if (typeof window !== "undefined") {
+    document.cookie =
+      "redirectPath=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  }
+};
+
 // Provider
 export default function AuthProvider({ children }) {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [{ user, isAuthenticated, isLoading, error }, dispatch] = useReducer(
     authReducer,
     initialState
@@ -96,7 +118,11 @@ export default function AuthProvider({ children }) {
       dispatch({ type: "signin", payload: user });
       addSigninNotification(user.email || values.email);
       toast.success(message);
-      router.replace("/profile");
+
+      // Get redirect path from cookie or default to home
+      const redirectPath = getRedirectPathFromCookie();
+      clearRedirectPathCookie();
+      router.replace(redirectPath);
     } catch (error) {
       const errorMsg = error?.response?.data?.message;
       dispatch({ type: "rejected", payload: errorMsg });
@@ -113,7 +139,11 @@ export default function AuthProvider({ children }) {
       dispatch({ type: "signup", payload: user });
       addSignupNotification(user.email || values.email);
       toast.success(message);
-      router.replace("/profile");
+
+      // Get redirect path from cookie or default to home
+      const redirectPath = getRedirectPathFromCookie();
+      clearRedirectPathCookie();
+      router.replace(redirectPath);
     } catch (error) {
       const errorMsg = error?.response?.data?.message;
       dispatch({ type: "rejected", payload: errorMsg });
@@ -142,8 +172,11 @@ export default function AuthProvider({ children }) {
       // Clear all notifications on logout
       clearAllNotifications();
 
-      router.push("/");
+      // Clear redirect path on logout
+      clearRedirectPathCookie();
+
       dispatch({ type: "logout" });
+      router.push("/home");
     } catch (error) {
       toast.error(error);
     }

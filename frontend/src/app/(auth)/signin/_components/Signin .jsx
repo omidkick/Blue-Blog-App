@@ -59,21 +59,6 @@ function Signin() {
         <div className="w-full max-w-sm">
           {/* Header */}
           <div className="text-center mb-8">
-            {/* <div className="inline-flex items-center justify-center w-14 h-14 bg-primary-100 rounded-2xl mb-6">
-              <svg
-                className="w-7 h-7 text-primary-600"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                />
-              </svg>
-            </div> */}
             <h1 className="text-2xl font-bold text-secondary-800 mb-2">ورود</h1>
             <p className="text-secondary-500 text-sm">
               به حساب کاربری خود وارد شوید
@@ -89,6 +74,9 @@ function Signin() {
                   {...register("email")}
                   type="email"
                   dir="ltr"
+                  autoComplete="email"
+                  id="email"
+                  name="email"
                   className={`w-full pr-28 pl-10 py-3 rounded-xl bg-secondary-50 text-secondary-800 placeholder-transparent border transition-all duration-200 focus:outline-none focus:ring-1 hover:border-primary-700 ${
                     errors.email
                       ? "border-red-500 focus:ring-red-500"
@@ -128,6 +116,9 @@ function Signin() {
                   {...register("password")}
                   type={showPassword ? "text" : "password"}
                   dir="ltr"
+                  autoComplete="current-password"
+                  id="password"
+                  name="password"
                   className={`w-full pr-28 pl-10 py-3 rounded-xl bg-secondary-50 text-secondary-800 placeholder-transparent border transition-all duration-200 focus:outline-none focus:ring-1 hover:border-primary-700  ${
                     errors.password
                       ? "border-red-500 focus:ring-red-500"
@@ -177,6 +168,9 @@ function Signin() {
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
+                  autoComplete="off"
+                  id="remember"
+                  name="remember"
                   className="w-4 h-4 text-primary-600 bg-secondary-50 border-secondary-300 rounded focus:ring-primary-500 focus:ring-2"
                 />
                 <span className="text-secondary-600">مرا به خاطر بسپار</span>
@@ -219,7 +213,10 @@ function Signin() {
 
           {/* Social Login */}
           <div className="space-y-3 mb-6">
-            <button className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-secondary-200 rounded-xl hover:bg-secondary-50 transition-all duration-200 group">
+            <button 
+              type="button"
+              className="w-full flex items-center justify-center gap-3 px-4 py-2.5 border border-secondary-200 rounded-xl hover:bg-secondary-50 transition-all duration-200 group"
+            >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
                   fill="#4285F4"

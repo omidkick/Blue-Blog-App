@@ -1,8 +1,10 @@
-function Select({ value, onChange, options }) {
+function Select({ value, onChange, options, id, name }) {
   return (
     <select
       value={value}
       onChange={onChange}
+      id={id}
+      name={name}
       className="textField__input py-2.5 text-xs bg-secondary-0"
     >
       {options.map((item) => (

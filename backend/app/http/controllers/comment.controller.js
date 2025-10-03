@@ -13,7 +13,7 @@ class CommentController extends Controller {
     const user = req.user;
     // const status = user.role === "ADMIN" ? 2 : 0;
     // ! JUST FOR EDUCATIONAL PURPOSES => STATUS: 2
-    const status = 1;
+    const status = 2;
     // const status = 2;
     const { text, parentId, postId } = req.body;
     const content = { text };
@@ -47,7 +47,7 @@ class CommentController extends Controller {
       return res.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,
         data: {
-          message: "پاسخ شما با موفقیت ثبت شد، پس از تایید قابل مشاهده است",
+          message: "پاسخ شما با موفقیت ثبت شد !",
         },
       });
     } else {
@@ -59,11 +59,11 @@ class CommentController extends Controller {
         openToComment: true,
       });
       if (!newComment)
-        throw createHttpError.InternalServerError("ثبت نطر انجام نشد");
+        throw createHttpError.InternalServerError("ثبت نظر انجام نشد");
       return res.status(HttpStatus.CREATED).json({
         statusCode: HttpStatus.CREATED,
         data: {
-          message: "نظر شما با موفقیت ثبت شد، پس از تایید قابل مشاهده است",
+          message: "نظر شما با موفقیت ثبت شد !",
         },
       });
     }

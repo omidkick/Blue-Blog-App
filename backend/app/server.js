@@ -13,7 +13,7 @@ class Application {
   #DB_URI = process.env.MONGODB_URI;
 
   constructor() {
-    this.createServer();
+    this.createServer(); 
     this.connectToDB();
     this.configServer();
     this.initClientSession();
@@ -44,9 +44,37 @@ class Application {
     );
   }
   configServer() {
-    this.#app.use(
-      cors({ credentials: true, origin: process.env.ALLOW_CORS_ORIGIN })
-    );
+    // CORS Configuration
+    const corsOptions = {
+      origin: function (origin, callback) {
+        // List of allowed domains
+        const allowedDomains = [
+          'https://blue-blog.ir',
+          'https://www.blue-blog.ir',
+          'http://localhost:3000',
+          'http://localhost:3001'
+        ];
+        
+        // Allow requests with no origin (like mobile apps or server requests)
+        if (!origin) return callback(null, true);
+        
+        if (allowedDomains.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          console.log('Blocked by CORS:', origin);
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie']
+    };
+
+    this.#app.use(cors(corsOptions));
+    
+    // Handle preflight requests
+    this.#app.options('*', cors(corsOptions));
+    
     this.#app.use(express.json());
     this.#app.use(express.urlencoded({ extended: true }));
     this.#app.use(express.static(path.join(__dirname, "..")));

@@ -32,6 +32,8 @@ function BlogSort() {
       onChange={handleChange}
       value={sort}
       options={sortOptions}
+      name="sort-select"
+      id="sort-select"
     />
   );
 }

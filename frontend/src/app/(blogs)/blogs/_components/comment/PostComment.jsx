@@ -9,6 +9,7 @@ import { useState } from "react";
 import CommentForm from "./CommentForm";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function PostComment({ post: { comments, _id: postId } }) {
   const [open, setOpen] = useState(false);
@@ -20,6 +21,7 @@ function PostComment({ post: { comments, _id: postId } }) {
   const addNewCommentHandler = (parent) => {
     // Checking existed user:
     if (!user) {
+      toast.error("لطفا ابتدا وارد حساب کاربری خود شوید !");
       router.push("/signin");
       return;
     }
